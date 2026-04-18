@@ -22,7 +22,12 @@ class ResultScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            // Phase 5: add a celebration image above this text
+            if (score / total >= 0.8)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Image.asset('assets/images/celebrate.jpg', width: 140),
+              ),
+
             Text('Quiz Complete!',
                 style: Theme.of(context)
                     .textTheme

@@ -132,10 +132,15 @@ class _QuizScreenState extends State<QuizScreen> {
       return Scaffold(
         body: Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            // Phase 5: replace with Image.asset for loading image
-            const CircularProgressIndicator(),
-            const SizedBox(height: 16),
-            const Text('Loading questions...'),
+  
+  Column(mainAxisSize: MainAxisSize.min, children: [
+    Image.asset('assets/images/loading.png', width: 120),
+    const SizedBox(height: 16),
+    const CircularProgressIndicator(),
+    const SizedBox(height: 12),
+    const Text('Loading questions...'),
+]),
+  
           ]),
         ),
       );
