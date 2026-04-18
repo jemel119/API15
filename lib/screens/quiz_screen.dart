@@ -21,9 +21,34 @@ class _QuizScreenState extends State<QuizScreen> {
   String? _selectedAnswer;
   String? _errorMessage;
 
+  String _generateHint(Question q) {
+  final correct = q.correctAnswer;
+  final firstLetter = correct.isNotEmpty ? correct[0].toUpperCase() : '?';
+  final wordCount = correct.trim().split(RegExp(r'\s+')).length;
+
+  final categoryHints = {
+    'Programming': 'Think about syntax, keywords, or runtime behavior.',
+    'DevOps': 'Think about tools, pipelines, or deployment steps.',
+    'Linux': 'Think about terminal commands or file system structure.',
+    'Docker': 'Think about containers, images, or compose files.',
+    'SQL': 'Think about query structure or database operations.',
+  };
+
+  final categoryHint =
+      categoryHints[q.category] ?? 'Think carefully about the topic.';
+
+  return '\uD83D\uDCA1 Hint: The answer starts with the letter "' +
+      firstLetter +
+      '" and is ' +
+      wordCount.toString() +
+      ' word(s) long.\n\n' +
+      categoryHint;
+}
+
+
   // ── Extension 1: Adaptive Hint Coach (added Phase 6) ──
-  // String? _hint;
-  // bool _hintVisible = false;
+  String? _hint;
+  bool _hintVisible = false;
 
   // ── Extension 2: Difficulty Personalization (added Phase 7) ──
   // int _correctStreak = 0;
@@ -62,7 +87,9 @@ class _QuizScreenState extends State<QuizScreen> {
     _currentAnswers = _questions[_currentIndex].shuffledAnswers;
     _answered = false;
     _selectedAnswer = null;
-    // Phase 6: also reset _hint and _hintVisible here
+    _hint = null;
+    _hintVisible = false;
+
   }
 
   void _onAnswerTap(String answer) {
@@ -238,7 +265,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                   ),
                 )),
-                // Phase 6: Hint button goes here
+
                 // ── MANUAL NEXT BUTTON ─────────────────────────────
                 if (_answered)
                   Padding(
